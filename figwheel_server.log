@@ -1,0 +1,27 @@
+Figwheel: focusing on build-ids (dev)
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.082 seconds.[0m
+notifying browser that file changed:  resources/public/js/compiled/out/goog/deps.js
+notifying browser that file changed:  resources/public/js/compiled/out/cljs_deps.js
+notifying browser that file changed:  /threejs_figwheel/core.js
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.095 seconds.[0m
+notifying browser that file changed:  /threejs_figwheel/core.js
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.096 seconds.[0m
+notifying browser that file changed:  /threejs_figwheel/core.js
+Figwheel: focusing on build-ids (dev)
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.074 seconds.[0m
+notifying browser that file changed:  resources/public/js/compiled/out/goog/deps.js
+notifying browser that file changed:  resources/public/js/compiled/out/cljs_deps.js
+notifying browser that file changed:  /threejs_figwheel/core.js
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.138 seconds.[0m
+notifying browser that file changed:  /threejs_figwheel/core.js
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.098 seconds.[0m
+notifying browser that file changed:  /threejs_figwheel/core.js
+[0mCompiling "resources/public/js/compiled/threejs_figwheel.js" from ["src"]...
+[32mSuccessfully compiled "resources/public/js/compiled/threejs_figwheel.js" in 0.106 seconds.[0m
+notifying browser that file changed:  /threejs_figwheel/core.js
