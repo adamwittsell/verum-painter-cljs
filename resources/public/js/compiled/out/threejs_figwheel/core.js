@@ -1,9 +1,14 @@
 // Compiled by ClojureScript 0.0-3297 {}
 goog.provide('threejs_figwheel.core');
 goog.require('cljs.core');
-goog.require('figwheel.client');
-goog.require('three');
+goog.require('thi.ng.geom.polygon');
 goog.require('stats');
+goog.require('thi.ng.geom.core');
+goog.require('figwheel.client');
+goog.require('thi.ng.geom.core.vector');
+goog.require('thi.ng.geom.basicmesh');
+goog.require('thi.ng.geom.types');
+goog.require('thi.ng.geom.circle');
 cljs.core.enable_console_print_BANG_.call(null);
 if(typeof threejs_figwheel.core.APP_STATE !== 'undefined'){
 } else {
@@ -42,6 +47,7 @@ return cljs.core.swap_BANG_.call(null,threejs_figwheel.core.APP_STATE,cljs.core.
 return null;
 }
 });
+threejs_figwheel.core.three = THREE;
 /**
  * Swap into the app state the renderer, and a function to stop the current animation loop.
  */
@@ -49,12 +55,16 @@ threejs_figwheel.core.startup_app = (function threejs_figwheel$core$startup_app(
 if(cljs.core.truth_(new cljs.core.Keyword(null,"renderer","renderer",336841071).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,threejs_figwheel.core.APP_STATE)))){
 return null;
 } else {
-var scene = (new THREE.Scene());
-var camera = (new THREE.PerspectiveCamera((75),(window.innerWidth / window.innerHeight),0.1,(1000)));
-var renderer = (new THREE.WebGLRenderer());
-var geometry = (new THREE.BoxGeometry((1),(1),(1)));
-var material = (new THREE.MeshBasicMaterial(cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"color","color",1011675173),(65280),new cljs.core.Keyword(null,"wireframe","wireframe",1009957322),false], null))));
-var cube = (new THREE.Mesh(geometry,material));
+initMat();
+
+var scene = (new threejs_figwheel.core.three.Scene());
+var camera = (new threejs_figwheel.core.three.PerspectiveCamera((75),(window.innerWidth / window.innerHeight),0.1,(1000)));
+var renderer = (new threejs_figwheel.core.three.WebGLRenderer());
+var geometry = (new threejs_figwheel.core.three.BoxGeometry((1),0.1,(1)));
+var material = (new threejs_figwheel.core.three.MeshBasicMaterial(cljs.core.clj__GT_js.call(null,new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"color","color",1011675173),(16755387),new cljs.core.Keyword(null,"wireframe","wireframe",1009957322),true], null))));
+var cube = (new threejs_figwheel.core.three.Mesh(geometry,matstroke));
+var teeth = (20);
+var model = thi.ng.geom.core.as_mesh.call(null,thi.ng.geom.polygon.cog.call(null,0.5,teeth,new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [0.9,(1),(1),0.9], null)));
 var RUNNING = cljs.core.atom.call(null,true);
 renderer.xxid = new cljs.core.Keyword(null,"c","c",-1763192079).cljs$core$IFn$_invoke$arity$1(cljs.core.swap_BANG_.call(null,threejs_figwheel.core.APP_STATE,cljs.core.update,new cljs.core.Keyword(null,"c","c",-1763192079),cljs.core.inc));
 
@@ -68,7 +78,9 @@ scene.add(cube);
 
 camera.position.z = (3);
 
-var animate = ((function (scene,camera,renderer,geometry,material,cube,RUNNING){
+cljs.core.println.call(null,cljs.core.first.call(null,cljs.core.first.call(null,new cljs.core.Keyword(null,"vertices","vertices",2008905731).cljs$core$IFn$_invoke$arity$1(model))));
+
+var animate = ((function (scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING){
 return (function threejs_figwheel$core$startup_app_$_animate(){
 if(cljs.core.truth_(cljs.core.deref.call(null,RUNNING))){
 requestAnimationFrame(threejs_figwheel$core$startup_app_$_animate);
@@ -88,18 +100,18 @@ return stats.update();
 } else {
 return null;
 }
-});})(scene,camera,renderer,geometry,material,cube,RUNNING))
+});})(scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING))
 ;
 animate.call(null);
 
-return cljs.core.swap_BANG_.call(null,threejs_figwheel.core.APP_STATE,((function (scene,camera,renderer,geometry,material,cube,RUNNING){
-return (function (p1__22854_SHARP_){
-return cljs.core.assoc.call(null,p1__22854_SHARP_,new cljs.core.Keyword(null,"renderer","renderer",336841071),renderer,new cljs.core.Keyword(null,"stopper","stopper",-304934685),((function (scene,camera,renderer,geometry,material,cube,RUNNING){
+return cljs.core.swap_BANG_.call(null,threejs_figwheel.core.APP_STATE,((function (scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING){
+return (function (p1__29122_SHARP_){
+return cljs.core.assoc.call(null,p1__29122_SHARP_,new cljs.core.Keyword(null,"renderer","renderer",336841071),renderer,new cljs.core.Keyword(null,"stopper","stopper",-304934685),((function (scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING){
 return (function (){
 return cljs.core.reset_BANG_.call(null,RUNNING,false);
-});})(scene,camera,renderer,geometry,material,cube,RUNNING))
+});})(scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING))
 );
-});})(scene,camera,renderer,geometry,material,cube,RUNNING))
+});})(scene,camera,renderer,geometry,material,cube,teeth,model,RUNNING))
 );
 }
 });
@@ -107,19 +119,19 @@ return cljs.core.reset_BANG_.call(null,RUNNING,false);
  * Stop animation cycle, tear out renderer.
  */
 threejs_figwheel.core.teardown_app = (function threejs_figwheel$core$teardown_app(){
-var temp__4425__auto___22855 = new cljs.core.Keyword(null,"stopper","stopper",-304934685).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,threejs_figwheel.core.APP_STATE));
-if(cljs.core.truth_(temp__4425__auto___22855)){
-var stopper_22856 = temp__4425__auto___22855;
-stopper_22856.call(null);
+var temp__4425__auto___29123 = new cljs.core.Keyword(null,"stopper","stopper",-304934685).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,threejs_figwheel.core.APP_STATE));
+if(cljs.core.truth_(temp__4425__auto___29123)){
+var stopper_29124 = temp__4425__auto___29123;
+stopper_29124.call(null);
 } else {
 }
 
-var temp__4425__auto___22857 = new cljs.core.Keyword(null,"renderer","renderer",336841071).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,threejs_figwheel.core.APP_STATE));
-if(cljs.core.truth_(temp__4425__auto___22857)){
-var renderer_22858 = temp__4425__auto___22857;
-console.log("Removing: ",renderer_22858.xxid);
+var temp__4425__auto___29125 = new cljs.core.Keyword(null,"renderer","renderer",336841071).cljs$core$IFn$_invoke$arity$1(cljs.core.deref.call(null,threejs_figwheel.core.APP_STATE));
+if(cljs.core.truth_(temp__4425__auto___29125)){
+var renderer_29126 = temp__4425__auto___29125;
+console.log("Removing: ",renderer_29126.xxid);
 
-document.body.removeChild(renderer_22858.domElement);
+document.body.removeChild(renderer_29126.domElement);
 } else {
 }
 
@@ -137,4 +149,4 @@ return threejs_figwheel.core.startup_stats.call(null);
 threejs_figwheel.core.startup_app.call(null);
 threejs_figwheel.core.startup_stats.call(null);
 
-//# sourceMappingURL=core.js.map?rel=1449241287759
+//# sourceMappingURL=core.js.map?rel=1449337325254

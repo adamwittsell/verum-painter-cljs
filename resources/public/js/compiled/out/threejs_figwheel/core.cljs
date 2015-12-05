@@ -1,7 +1,12 @@
 (ns ^:figwheel-always threejs-figwheel.core
-    (:require [figwheel.client :as fw]
-              three
-              stats))
+  (:require [figwheel.client :as fw]
+            [thi.ng.geom.core :as g]
+            [thi.ng.geom.core.vector :as v :refer [vec2 vec3]]
+            [thi.ng.geom.types]
+            [thi.ng.geom.circle :as c]
+            [thi.ng.geom.polygon :as poly]
+            [thi.ng.geom.basicmesh :refer [basic-mesh]]
+            stats))
 
 (enable-console-print!)
 
@@ -30,20 +35,29 @@
     (.removeChild (.-body js/document) (.-domElement stats))
     (swap! APP-STATE dissoc :stats)))
 
+(def three js/THREE)
+
+
 (defn startup-app
   "Swap into the app state the renderer, and a function to stop the current animation loop."
   []
   (when-not (:renderer @APP-STATE)
-    (let [scene (js/THREE.Scene.)
-          camera (js/THREE.PerspectiveCamera. 75
+      (js/initMat)
+    (let [scene (three.Scene.)
+          camera (three.PerspectiveCamera. 75
                                               (/ (.-innerWidth js/window) (.-innerHeight js/window))
                                               0.1
                                               1000)
-          renderer (js/THREE.WebGLRenderer.)
-          geometry (js/THREE.BoxGeometry. 1 1 1)
-          material (js/THREE.MeshBasicMaterial. (clj->js {:color 0x00FF00
-                                                          :wireframe false}))
-          cube (js/THREE.Mesh. geometry material)
+          renderer (three.WebGLRenderer.)
+          geometry (three.BoxGeometry. 1 0.1 1)
+          material (three.MeshBasicMaterial. (clj->js {:color 0xFFAABB
+                                                          :wireframe true}))
+          cube (three.Mesh. geometry js/matstroke)
+
+          teeth 20
+          model (-> (poly/cog 0.5 teeth [0.9 1 1 0.9])
+                    (g/as-mesh)
+                    )
           ;; An "alive" flag to let us kill the animation refresh when we tear down:
           RUNNING (atom true)]
       (set! (.-xxid renderer)
@@ -53,6 +67,8 @@
       (.appendChild (.-body js/document) (.-domElement renderer))
       (.add scene cube)
       (set! (.. camera -position -z) 3)
+
+      (println (first  (first  (:vertices model))))
 
       (letfn [(animate []
                 (when @RUNNING (js/requestAnimationFrame animate))
